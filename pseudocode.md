@@ -4,13 +4,13 @@ for each connection
      get current status of each connection
      check if status changed
      if change:
+          increase count by one
           check if count threshold for state change has been met
           if met:
                change state
                reset all counts for interface
                send alert to all stakeholders
           else
-               increase count by one
                reset other count
           save new connection state in db
           save new counts in file

@@ -1,4 +1,4 @@
-initialize connections
+```initialize connections
 get status of each connection from db
 for each connection
      get current status of each connection
@@ -22,3 +22,4 @@ for each connection
           prepare template based on connection combo
           overwrite tcrules
           restart shorewall
+```

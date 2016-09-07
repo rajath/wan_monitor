@@ -1,16 +1,16 @@
 from peewee import *
 
-db = SqliteDatabase('connections.db')
+db = SqliteDatabase('connections.db',threadlocals=True)
 
 class BaseModel(Model):
     class Meta:
         database = db
 
 class wanStatus(BaseModel):
-	wanName= CharField()
-    	wanUpCount = IntegerField()
-    	wanDownCount = IntegerField()
-    	wanState = BooleanField()
+	interfaceName= CharField()
+    	upCount = IntegerField()
+    	downCount = IntegerField()
+    	state = BooleanField()
 
 class wanSettings(BaseModel):
 	name= CharField()

@@ -48,3 +48,4 @@ for wan in connectionList:
 # create a tcrules file for active connections and save in shorewall
 TCRulesFile = TCrules("tcrules","/Users/rajath/dev/python/wan_monitor_env/wan_monitor")
 TCRulesFile.writeFile(activeConnectionList)
+TCrules.restartShorewall()

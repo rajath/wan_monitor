@@ -22,3 +22,9 @@ class TCrules:
 		tcrulesFile = open(self.filePath+"/"+self.fileName, 'w')
 		for item in fileContents: #write to file
 			tcrulesFile.write("%s\n" % item)
+
+	@staticmethod
+
+	def restartShorewall():
+		
+		os.system('service shorewall restart')

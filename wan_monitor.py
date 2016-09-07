@@ -4,9 +4,9 @@ from tcrules import *
 
 PING_IP = "8.8.8.8"
 TCRULES_PATH = "/etc/shorewall"
-TCRULES_FILE = "tcrules_test"
+TCRULES_FILE = "tcrules"
 
-upThreshold = 1  #no. of up pings to call iface as up
+upThreshold = 5  #no. of up pings to call iface as up
 downThreshold = 2 # no. of down pings to call iface as down
 
 db.connect()
@@ -42,7 +42,6 @@ for wan in connectionList:
 				print "stage changed to up for %s" % wan.interfaceName	
 			else:
 				wan.resetDownCount()	
-			print True
 	else:
 		wan.resetAllCount()
 

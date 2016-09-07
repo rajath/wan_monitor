@@ -1,6 +1,6 @@
 from peewee import *
 
-db = SqliteDatabase('connections.db',threadlocals=True)
+db = SqliteDatabase('/root/wan_monitor_env/wan_monitor/connections.db',threadlocals=True)
 
 class BaseModel(Model):
     class Meta:

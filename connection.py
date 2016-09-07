@@ -1,5 +1,6 @@
-from models import *
 from conn_models import *
+import os
+import subprocess as sub
 
 class ConnectionException(Exception):
     def __init__(self, msg):
@@ -35,7 +36,9 @@ class Connection:
       """ 
             pings through a specific interface to check status
       """
-      return False
+      FNULL = open(os.devnull,'w')
+      result = not sub.call(['ping', '-q', '-c 1', '-W 1', self.wanPingIP],stdout=FNULL,stderr=sub.STDOUT)
+      return result 
 
    def changeState(self):
       """

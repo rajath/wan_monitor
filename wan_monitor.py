@@ -2,15 +2,20 @@ import sys
 from connection import *
 from tcrules import *
 
-upThreshold = 2  #no. of up pings to call iface as up
-downThreshold = 5 # no. of down pings to call iface as down
+PING_IP = "8.8.8.8"
+TCRULES_PATH = "/etc/shorewall"
+TCRULES_FILE = "tcrules_test"
+
+upThreshold = 1  #no. of up pings to call iface as up
+downThreshold = 2 # no. of down pings to call iface as down
 
 db.connect()
 
-con1 = Connection("eth0", "act",1,"192.168.1.1")
-con2 = Connection("eth1","act",2,"8.8.8.8")
+con1 = Connection("p5p1", "ACT",1,PING_IP)
+con2 = Connection("p2p1","ACT_BACKUP",2,PING_IP)
+con3 = Connection("em1","SPECTRANET",3,PING_IP)
 
-connectionList = [con1,con2]
+connectionList = [con1,con2,con3]
 activeConnectionList = []
 
 for wan in connectionList:
@@ -46,6 +51,6 @@ for wan in connectionList:
 	if (wan.status.state): 
 		activeConnectionList.append(wan) 
 # create a tcrules file for active connections and save in shorewall
-TCRulesFile = TCrules("tcrules","/Users/rajath/dev/python/wan_monitor_env/wan_monitor")
+TCRulesFile = TCrules(TCRULES_FILE,TCRULES_PATH)
 TCRulesFile.writeFile(activeConnectionList)
 TCrules.restartShorewall()

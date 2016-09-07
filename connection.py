@@ -37,7 +37,7 @@ class Connection:
             pings through a specific interface to check status
       """
       FNULL = open(os.devnull,'w')
-      result = not sub.call(['ping', '-q', '-c 1', '-W 1', self.wanPingIP],stdout=FNULL,stderr=sub.STDOUT)
+      result = not sub.call(['ping', '-q', '-c 1', '-W 1','-I'+self.interfaceName, self.wanPingIP],stdout=FNULL,stderr=sub.STDOUT)
       return result 
 
    def changeState(self):

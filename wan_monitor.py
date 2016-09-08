@@ -11,12 +11,17 @@ downThreshold = 2 # no. of down pings to call iface as down
 
 db.connect()
 
+#initialize all connections
 con1 = Connection("p5p1", "ACT",1,PING_IP)
 con2 = Connection("p2p1","ACT_BACKUP",2,PING_IP)
 con3 = Connection("em1","SPECTRANET",3,PING_IP)
-
 connectionList = [con1,con2,con3]
+#initialize list for active connections
 activeConnectionList = []
+#flag to check if any interface changed state
+statusChangeFlag = False
+
+
 
 for wan in connectionList:
 	print "Status of %s is %d" % (wan.interfaceName,wan.status.state)
@@ -27,6 +32,7 @@ for wan in connectionList:
 			if(wan.status.downCount >= downThreshold):
 				wan.changeState()
 				wan.resetAllCount()
+				statusChangeFlag = True
 				print "stage changed to down for %s" % wan.interfaceName
 					
 			else:
@@ -39,6 +45,7 @@ for wan in connectionList:
 			if(wan.status.upCount >= upThreshold):
 				wan.changeState()
 				wan.resetAllCount()
+				statusChangeFlag = True
 				print "stage changed to up for %s" % wan.interfaceName	
 			else:
 				wan.resetDownCount()	
@@ -52,4 +59,5 @@ for wan in connectionList:
 # create a tcrules file for active connections and save in shorewall
 TCRulesFile = TCrules(TCRULES_FILE,TCRULES_PATH)
 TCRulesFile.writeFile(activeConnectionList)
-TCrules.restartShorewall()
+if statusChangeFlag:
+	TCrules.restartShorewall()

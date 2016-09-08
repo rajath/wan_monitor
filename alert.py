@@ -19,7 +19,6 @@ class Alert:
 			#prepare email subj and body
 			now = datetime.datetime.now()
 			nowStringHuman =  datetime.datetime.strftime(now,"%Y-%m-%d %H:%M")
-			print type(nowStringHuman)
 			emailSubject = "Interface "+self.interfaceName+" "+self.alertType.upper()+" at "+nowStringHuman
 			emailBody = "The interface "+self.interfaceName+" is now "+self.alertType
 			osCommand = "echo  '"+emailBody+"' | mail -s  '"+emailSubject+"'  "+self.alertTarget

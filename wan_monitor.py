@@ -1,6 +1,7 @@
 import sys
 from connection import *
 from tcrules import *
+from alert import *
 
 PING_IP = "8.8.8.8"
 TCRULES_PATH = "/etc/shorewall"
@@ -16,6 +17,8 @@ con1 = Connection("p5p1", "ACT",1,PING_IP)
 con2 = Connection("p2p1","ACT_BACKUP",2,PING_IP)
 con3 = Connection("em1","SPECTRANET",3,PING_IP)
 connectionList = [con3,con2,con1]
+
+
 #initialize list for active connections
 activeConnectionList = []
 #flag to check if any interface changed state
@@ -34,7 +37,9 @@ for wan in connectionList:
 				wan.resetAllCount()
 				statusChangeFlag = True
 				print "stage changed to down for %s" % wan.interfaceName
-					
+				#initialize and send alert 
+				alert1 = Alert("email","rajath@chumbak.in",wan.interfaceName,"down")
+				alert1.sendAlert()	
 			else:
 				wan.resetUpCount()	
 			
@@ -46,7 +51,9 @@ for wan in connectionList:
 				wan.changeState()
 				wan.resetAllCount()
 				statusChangeFlag = True
-				print "stage changed to up for %s" % wan.interfaceName	
+				print "stage changed to up for %s" % wan.interfaceName
+				alert2 = Alert("email","rajath@chumbak.in",wan.interfaceName,"up")
+				alert2.sendAlert()	
 			else:
 				wan.resetDownCount()	
 	else:

@@ -57,7 +57,7 @@ for wan in connectionList:
 	if (wan.status.state): 
 		activeConnectionList.append(wan) 
 # create a tcrules file for active connections and save in shorewall
-TCRulesFile = TCrules(TCRULES_FILE,TCRULES_PATH)
-TCRulesFile.writeFile(activeConnectionList)
 if statusChangeFlag:
+	TCRulesFile = TCrules(TCRULES_FILE,TCRULES_PATH)
+	TCRulesFile.writeFile(activeConnectionList)
 	TCrules.restartShorewall()

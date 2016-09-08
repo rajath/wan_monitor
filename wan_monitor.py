@@ -15,7 +15,7 @@ db.connect()
 con1 = Connection("p5p1", "ACT",1,PING_IP)
 con2 = Connection("p2p1","ACT_BACKUP",2,PING_IP)
 con3 = Connection("em1","SPECTRANET",3,PING_IP)
-connectionList = [con1,con2,con3]
+connectionList = [con3,con2,con1]
 #initialize list for active connections
 activeConnectionList = []
 #flag to check if any interface changed state

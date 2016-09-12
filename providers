@@ -1,0 +1,4 @@
+#NAME 	NUMBER 	MARK 		DUPLICATE 	INTERFACE 		GATEWAY      	OPTIONS          COPY
+ACT_BACKUP 3 3 main  $INT_WAN3 WAN3_GTWY   track,balance  $INT_LAN
+ACT 2 2 main  $INT_WAN2 WAN2_GTWY   track,balance  $INT_LAN
+SPECTRANET 1 1 main  $INT_WAN1 WAN1_GTWY   track,balance  $INT_LAN

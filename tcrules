@@ -1,3 +1,1 @@
-#MARK           SOURCE          DEST            PROTO   PORT(S) CLIENT PORT(S)  USER    TEST
-1:P         -        -
-2:P         -        -
+#NAME 	NUMBER 	MARK 		DUPLICATE 	INTERFACE 		GATEWAY      	OPTIONS          COPY

@@ -2,6 +2,8 @@ from conn_models import *
 import os
 import subprocess as sub
 
+OVERRIDE_PING = True
+
 class ConnectionException(Exception):
     def __init__(self, msg):
         self.msg = msg
@@ -38,7 +40,7 @@ class Connection:
       """
       FNULL = open(os.devnull,'w')
       result = not sub.call(['ping', '-q', '-c 1', '-W 1','-I'+self.interfaceName, self.wanPingIP],stdout=FNULL,stderr=sub.STDOUT)
-      return result 
+      return result
 
    def changeState(self):
       """

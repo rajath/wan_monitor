@@ -1,22 +1,30 @@
 import sys
 from connection import *
-from tcrules import *
+from providers import *
 from alert import *
+from shorewall import *
 
 PING_IP = "8.8.8.8"
-TCRULES_PATH = "/etc/shorewall"
-TCRULES_FILE = "tcrules"
 
-upThreshold = 5  #no. of up pings to call iface as up
+#change this in live
+PROVIDERS_PATH = "."
+PROVIDERS_FILE = "providers"
+
+#for testing
+#change this in live
+MUTE_ALERT = True
+DISABLE_STATUS_CHANGE = True
+
+upThreshold = 2  #no. of up pings to call iface as up
 downThreshold = 2 # no. of down pings to call iface as down
 
 db.connect()
 
 #initialize all connections
-con1 = Connection("p5p1", "ACT",1,PING_IP)
-con2 = Connection("p2p1","ACT_BACKUP",2,PING_IP)
-con3 = Connection("em1","SPECTRANET",3,PING_IP)
-connectionList = [con3,con2,con1]
+con2 = Connection("p5p1", "ACT",2,PING_IP)
+con3 = Connection("p2p1","ACT_BACKUP",3,PING_IP)
+con1 = Connection("em1","SPECTRANET",1,PING_IP)
+connectionList = [con2,con3,con1]
 
 
 #initialize list for active connections
@@ -37,9 +45,10 @@ for wan in connectionList:
 				wan.resetAllCount()
 				statusChangeFlag = True
 				print "stage changed to down for %s" % wan.interfaceName
-				#initialize and send alert 
-				alert1 = Alert("email","rajath@chumbak.in",wan.interfaceName,"down")
-				alert1.sendAlert()	
+				if not MUTE_ALERT:
+					#initialize and send alert 
+					alert1 = Alert("email","rajath@chumbak.in",wan.interfaceName,"down")
+					alert1.sendAlert()	
 			else:
 				wan.resetUpCount()	
 			
@@ -52,8 +61,9 @@ for wan in connectionList:
 				wan.resetAllCount()
 				statusChangeFlag = True
 				print "stage changed to up for %s" % wan.interfaceName
-				alert2 = Alert("email","rajath@chumbak.in",wan.interfaceName,"up")
-				alert2.sendAlert()	
+				if not MUTE_ALERT:
+					alert2 = Alert("email","rajath@chumbak.in",wan.interfaceName,"up")
+					alert2.sendAlert()	
 			else:
 				wan.resetDownCount()	
 	else:
@@ -65,6 +75,6 @@ for wan in connectionList:
 		activeConnectionList.append(wan) 
 # create a tcrules file for active connections and save in shorewall
 if statusChangeFlag:
-	TCRulesFile = TCrules(TCRULES_FILE,TCRULES_PATH)
-	TCRulesFile.writeFile(activeConnectionList)
-	TCrules.restartShorewall()
+	ProvidersFile = Providers(PROVIDERS_FILE,PROVIDERS_PATH)
+	ProvidersFile.writeFile(activeConnectionList)
+	if not DISABLE_STATUS_CHANGE:  Shorewall.restartShorewall()

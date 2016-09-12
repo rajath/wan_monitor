@@ -1,6 +1,7 @@
 import sys
 from connection import *
 from providers import *
+from tcrules import *
 from alert import *
 from shorewall import *
 
@@ -8,6 +9,9 @@ PING_IP = "8.8.8.8"
 #change this in live
 PROVIDERS_PATH = "/etc/shorewall"
 PROVIDERS_FILE = "providers"
+
+TCRULES_PATH = "."
+TCRULES_FILE = "tcrules"
 
 #for testing
 #change this in live
@@ -74,6 +78,6 @@ for wan in connectionList:
 		activeConnectionList.append(wan) 
 # create a tcrules file for active connections and save in shorewall
 if statusChangeFlag:
-	ProvidersFile = Providers(PROVIDERS_FILE,PROVIDERS_PATH)
-	ProvidersFile.writeFile(activeConnectionList)
+	TCRulesFile = TCRules(TCRULES_FILE,TCRULES_PATH)
+	TCRulesFile.writeFile(activeConnectionList,connectionList)
 	if not DISABLE_STATUS_CHANGE:  Shorewall.restartShorewall()

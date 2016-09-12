@@ -40,7 +40,7 @@ class Connection:
       """
       FNULL = open(os.devnull,'w')
       result = not sub.call(['ping', '-q', '-c 1', '-W 1','-I'+self.interfaceName, self.wanPingIP],stdout=FNULL,stderr=sub.STDOUT)
-      return result
+      return True
 
    def changeState(self):
       """

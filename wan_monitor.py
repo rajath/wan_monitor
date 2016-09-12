@@ -5,15 +5,14 @@ from alert import *
 from shorewall import *
 
 PING_IP = "8.8.8.8"
-
 #change this in live
-PROVIDERS_PATH = "."
+PROVIDERS_PATH = "/etc/shorewall"
 PROVIDERS_FILE = "providers"
 
 #for testing
 #change this in live
-MUTE_ALERT = True
-DISABLE_STATUS_CHANGE = True
+MUTE_ALERT = False
+DISABLE_STATUS_CHANGE = False
 
 upThreshold = 2  #no. of up pings to call iface as up
 downThreshold = 2 # no. of down pings to call iface as down

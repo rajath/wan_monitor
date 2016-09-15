@@ -10,7 +10,7 @@ PING_IP = "8.8.8.8"
 PROVIDERS_PATH = "/etc/shorewall"
 PROVIDERS_FILE = "providers"
 
-TCRULES_PATH = "."
+TCRULES_PATH = "/etc/shorewall"
 TCRULES_FILE = "tcrules"
 
 #for testing
@@ -18,7 +18,7 @@ TCRULES_FILE = "tcrules"
 MUTE_ALERT = False
 DISABLE_STATUS_CHANGE = False
 
-upThreshold = 2  #no. of up pings to call iface as up
+upThreshold = 5  #no. of up pings to call iface as up
 downThreshold = 2 # no. of down pings to call iface as down
 
 db.connect()
@@ -27,7 +27,7 @@ db.connect()
 con2 = Connection("p5p1", "ACT",2,PING_IP)
 con3 = Connection("p2p1","ACT_BACKUP",3,PING_IP)
 con1 = Connection("em1","SPECTRANET",1,PING_IP)
-connectionList = [con2,con3,con1]
+connectionList = [con1,con3,con2]
 
 
 #initialize list for active connections

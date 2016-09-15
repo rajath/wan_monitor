@@ -1,6 +1,6 @@
 from peewee import *
 
-db = SqliteDatabase('connections.db',threadlocals=True)
+db = SqliteDatabase('/etc/shorewall/connections.db',threadlocals=True)
 
 class BaseModel(Model):
     class Meta:
